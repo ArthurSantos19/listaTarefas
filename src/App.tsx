@@ -17,10 +17,40 @@ function App() {
       isCompleted: true
     }
   ])
+
+  function addTask(taskTitle: string) {
+    setTasks([
+      ...tasks,
+      {
+        id: crypto.randomUUID(),
+        title: taskTitle,
+        isCompleted: false
+      }
+    ])
+  }
+
+  function deleteTaskId(taskId: string) {
+    const newTasks = tasks.filter((task => task.id !== taskId))
+    setTasks(newTasks)
+  }
+
+  function taskCompletedById(taskId: string) {
+    const newTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return {
+          ...task,
+          isCompleted: !task.isCompleted,
+        };
+      }
+      return task;
+    })
+    setTasks(newTasks)
+  }
+
   return (
     <>
-      <Header />
-      <Tasks tasks={tasks} />
+      <Header addTask={addTask} />
+      <Tasks tasks={tasks} onDelete={deleteTaskId} onComplete={taskCompletedById} />
     </>
   )
 }
