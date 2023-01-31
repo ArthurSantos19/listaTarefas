@@ -11,14 +11,19 @@ export function Header({ addTask }: Props) {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    if (title === "") {
+      alert('Favor digite a tarefa desejada!')
+    } else {
+      addTask(title);
+      setTitle("");
+    }
 
-    addTask(title);
-    setTitle("");
   }
 
   function onChangeTitle(event: ChangeEvent<HTMLInputElement>) {
     setTitle(event.target.value)
   }
+
 
   return (
     <header className={styles.header}>
